@@ -40,10 +40,10 @@ class Game {
                 // Check every letter of tetromino
                 let letter = rotation[row * 4 + col];
                 // Get letters absolute position on board
-                let posX = x + col;
-                let posY = y + row;
+                let posx = x + col;
+                let posy = y + row;
                 // If it is block and position is not empty return false
-                if (letter in ("X", "0", "1", "2", "3", "4", "5", "6") && !this.board.isEmpty(posx, posy))
+                if (letter in ["X", "0", "1", "2", "3", "4", "5", "6"] && !this.board.isEmpty(posx, posy))
                     return false;
             }
         }
@@ -142,7 +142,8 @@ class Game {
     }
 
     drawTetromino(index) {
-        // this.ctxMain.drawImage(this.spritesheet,0, 0,25,25, 0,0,25,25)
+        // First clean old image
+        this.ctxT.clearRect(0,0,this.canvasTetromino.width, this.canvasTetromino.height)
         let rot = this.tetromino.rotations[index]
         // Absolute position of tetromino on canvas
         let x = this.tx + this.bx;
