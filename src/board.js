@@ -25,4 +25,23 @@ class Board {
         return true;
     }
 
+    remComplLines() {
+        
+        let newFields = []
+        for(let i = 0; i < this.fields.length; ++i) {
+            let line = this.fields[i];
+            if(line.includes("."))
+                newFields.push(line);
+        }
+
+        let missing = this.fields.length - newFields.length;
+        for(let j = 0; j < missing; ++j) {
+            newFields.unshift(".".repeat(this.width))
+        }
+
+        this.fields = newFields;
+        // Return number of removed lines
+        return missing
+    }
+
 }
