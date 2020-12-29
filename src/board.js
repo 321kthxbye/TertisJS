@@ -13,4 +13,16 @@ class Board {
             this.fields.push(row);
         }
     }
+
+    isEmpty(x, y) {
+        if(!(0 <= x && x < this.width))
+            return false;
+        else if (!(0 <= y && y < this.height))
+            return false;
+        else if (!(this.fields[y][x] === "."))
+            return false;
+        
+        return true;
+    }
+
 }

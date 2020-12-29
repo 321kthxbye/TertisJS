@@ -26,10 +26,114 @@ class Game {
         this.bx = 3;
         this.by = 2;
 
-        this.tetromino = new Tetromino(0);
         this.board = new Board(10, 20);
+        this.bind(3, 0, 1)
 
     }
+
+    canPut(x, y, rotIndex){
+        let rotation = this.tetromino.rotations[rotIndex];
+
+        // Go trough testing tetromino
+        for(let row = 0; row < 4; ++row) {
+            for(let col = 0; col < 4; ++col) {
+                // Check every letter of tetromino
+                let letter = rotation[row * 4 + col];
+                // Get letters absolute position on board
+                let posX = x + col;
+                let posY = y + row;
+                // If it is block and position is not empty return false
+                if (letter in ("X", "0", "1", "2", "3", "4", "5", "6") && !this.board.isEmpty(posx, posy))
+                    return false;
+            }
+        }
+        return true;
+    }
+
+    put(x, y, index){
+        this.tx = x;
+        this.ty = y;
+        this.index = index;
+    }
+
+    moveLeft() {
+        if(this.canPut(this.tx - 1, this.ty, this.index)) {
+            this.put(this.tx - 1, this.ty, this.index);
+            return true;
+        }
+        else 
+            return false;
+    }
+
+    moveRight() {
+        if(this.canPut(this.tx + 1, this.ty, this.index)) {
+            this.put(this.x + 1, this.y, this.index);
+            return true;
+        }
+        else 
+            return false;
+    }
+
+    moveDown() {
+        if(this.canPut(this.tx, this.ty + 1, this.index)) {
+            this.put(this.tx, this.ty + 1, this.index);
+            return true;
+        }
+        else 
+            return false;
+    }
+    
+    rotate() {
+        if (this.canPut(this.tx, this.ty, (this.index + 1) % 4)) {
+            this.put(this.tx, this.ty, (this.index + 1) % 4)
+            return true;
+        }
+        else
+            return false;
+    }
+
+    drop() {
+        while (this.moveDown()) {
+            pass
+        }
+    }
+
+    release() {
+        let x = this.tx;
+        let y = this.ty
+        let rotation = this.tetromino.rotations[this.index];
+
+        // Go trough testing tetromino
+        for(let row = 0; row < 4; ++row){
+            for(let col = 0; col < 4; ++col){
+                // Check every letter of tetromino
+                // If empty skip
+                let letter = rotation[row * 4 + col];
+                if(letter === ".") {
+                    continue;
+                }
+                // Get actual letters/blocks position on board
+                posx = x + col;
+                posy = y + row;
+                // Put it on board
+                let line = this.board.fields[posy];
+                this.board.fields[posy] = line.slice(0,posx) + letter + line.slice(posx + 1, line.length);
+                this.tetromino = undefined;
+                this.tx = 0;
+                this.ty = 0;
+                this.index = 0;
+
+            }
+        }
+    }
+
+    bind(x, y, type){
+        this.tx = x
+        this.ty = y
+        this.index = 0
+        this.tetromino = new Tetromino(type)
+    }
+        
 
     render(){
         this.ctxMain.drawImage(this.canvasBackground, 0, 0);
