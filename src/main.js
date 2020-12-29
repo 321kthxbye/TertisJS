@@ -3,7 +3,8 @@
 
 let canvasMain = document.getElementById("mainCanvas");
 let game = new Game(canvasMain);
-let ticks = 0;
+let previousFrameTime = Date.now();
+let moveCounter = 500;
 // game.board.fields = 
 // ["..........",
 // "..........",
@@ -37,17 +38,24 @@ function main() {
     game.drawBoard();
     game.drawTetromino(0);
     game.render();
-    if(ticks === 40) {
+
+    let current = Date.now();
+    let delta = current - previousFrameTime;
+    previousFrameTime = current;
+    moveCounter -= delta;
+
+    if(moveCounter <= 0) {
         game.moveDown();
-        ticks = 0;
+        moveCounter = 500;
     }
-    else
-        ++ticks;
+
+    console.log(delta)
+    
 }
 
 
 game.spritesheet.onload = function() {
-    main(game);
+    main();
 }
 
     //         game.drawBackground();
