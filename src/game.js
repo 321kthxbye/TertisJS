@@ -19,8 +19,12 @@ class Game {
         this.canvasTetromino.width = this.mainCanvas.width;
         this.canvasTetromino.height = this.mainCanvas.height;
         this.ctxT = this.canvasTetromino.getContext("2d");
-
-
+        // Tetromino x y on board
+        this.tx = 3;
+        this.ty = 0;
+        // Board x y on canvas
+        this.bx = 3;
+        this.by = 2;
 
         this.tetromino = new Tetromino(0);
         this.board = new Board(10, 20);
@@ -33,9 +37,12 @@ class Game {
         this.ctxMain.drawImage(this.canvasTetromino, 0, 0);
     }
 
-    drawTetromino(x, y, index) {
+    drawTetromino(index) {
         // this.ctxMain.drawImage(this.spritesheet,0, 0,25,25, 0,0,25,25)
         let rot = this.tetromino.rotations[index]
+        // Absolute position of tetromino on canvas
+        let x = this.tx + this.bx;
+        let y = this.ty + this.by;
         // This creates separate line
         for(let row = 0; row < 4; ++row){
             let line = rot.slice(row * 4, row * 4 + 4);
@@ -58,7 +65,7 @@ class Game {
 
     }
 
-    drawBoard(x, y){
+    drawBoard(){
         for(let row = 0; row < this.board.height; ++row){
             for(let col = 0; col < this.board.width; ++col){
                 let letter = this.board.fields[row].charAt(col);
@@ -66,15 +73,20 @@ class Game {
                     continue;
                 let index = parseInt(letter);
 
-                this.ctxF.drawImage(this.spritesheet, index * 25, 0,25,25, col * 25, row * 25, 25, 25);
+                this.ctxF.drawImage(this.spritesheet, index * 25, 0,25,25, (this.bx + col) * 25, (this.by + row) * 25, 25, 25);
             }
         }
+
+        this.ctxF.fillStyle = "white";
+        this.ctxF.font = "20px Arial"
+        this.ctxF.fillText("SCORE: 123456", (this.bx + 13) * 25, this.by + 50 )
     }
 
-    drawBackground(x, y){
+    drawBackground(){
         for(let row = 0; row < this.board.height; ++row){
             for(let col = 0; col < this.board.width; ++col){
-                this.ctxBg.drawImage(this.spritesheet, 7 * 25, 0,25,25, col * 25, row * 25, 25, 25);
+
+                this.ctxBg.drawImage(this.spritesheet, 7 * 25, 0,25,25, (this.bx + col) * 25, (this.by + row) * 25, 25, 25);
             }
         }
     }

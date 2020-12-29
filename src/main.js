@@ -22,12 +22,12 @@ game.board.fields =
 "..........",
 "..........",
 "..........",
-"......0123"]
+"..76540123"]
 
 
 game.spritesheet.onload = function(){
-    game.drawBackground(0,0);
-    game.drawBoard(0,0);
-    game.drawTetromino(0,0,0);
+    game.drawBackground();
+    game.drawBoard();
+    game.drawTetromino(0);
     game.render();
 }
