@@ -1,3 +1,5 @@
+"use strict";
+
 class Game {
     constructor(mainCanvas) {
         this.spritesheet = new Image();
@@ -25,6 +27,8 @@ class Game {
         // Board x y on canvas
         this.bx = 3;
         this.by = 2;
+
+        this.delta = 0; 
 
         this.board = new Board(10, 20);
         this.bind(3, 0, 1)
@@ -67,7 +71,7 @@ class Game {
 
     moveRight() {
         if(this.canPut(this.tx + 1, this.ty, this.index)) {
-            this.put(this.x + 1, this.y, this.index);
+            this.put(this.tx + 1, this.ty, this.index);
             return true;
         }
         else 
@@ -94,7 +98,7 @@ class Game {
 
     drop() {
         while (this.moveDown()) {
-            pass
+            continue;
         }
     }
 
@@ -113,8 +117,8 @@ class Game {
                     continue;
                 }
                 // Get actual letters/blocks position on board
-                posx = x + col;
-                posy = y + row;
+                let posx = x + col;
+                let posy = y + row;
                 // Put it on board
                 let line = this.board.fields[posy];
                 this.board.fields[posy] = line.slice(0,posx) + letter + line.slice(posx + 1, line.length);

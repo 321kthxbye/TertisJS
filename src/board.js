@@ -1,3 +1,5 @@
+"use strict";
+
 class Board {
     constructor(width, height) {
         this.width = width;
@@ -26,7 +28,7 @@ class Board {
     }
 
     remComplLines() {
-        
+
         let newFields = []
         for(let i = 0; i < this.fields.length; ++i) {
             let line = this.fields[i];

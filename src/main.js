@@ -28,15 +28,39 @@ let moveCounter = 500;
 // "..76540123"]
 
 
- document.onkeypress = function(){
-        console.log("keypressed")
-    }
+ document.addEventListener("keydown", onKeydown);
+
+ function onKeydown(e){
+     console.log(e.code);
+     if(e.cancelable)
+        e.preventDefault();
+
+     switch (e.code) {
+         case "ArrowRight":
+            game.moveRight();
+             break;
+        case "ArrowLeft":
+            game.moveLeft();
+            break;
+        case "ArrowDown":
+            game.moveDown();
+            break;
+        case "ArrowUp":
+            game.drop();
+            break;
+        case "Space":
+            game.rotate();
+            break;
+        default:
+            break;
+     }
+ }
 
 function main() {
     window.requestAnimationFrame(main);
     game.drawBackground();
     game.drawBoard();
-    game.drawTetromino(0);
+    game.drawTetromino(game.index);
     game.render();
 
     let current = Date.now();
@@ -45,21 +69,14 @@ function main() {
     moveCounter -= delta;
 
     if(moveCounter <= 0) {
-        game.moveDown();
+        if(!game.moveDown()){
+            game.release();
+            game.bind(3,0,0);
+        }
         moveCounter = 500;
     }
-
-    console.log(delta)
-    
 }
-
 
 game.spritesheet.onload = function() {
     main();
 }
-
-    //         game.drawBackground();
-    //         game.drawBoard();
-    //         game.drawTetromino(0);
-    //         game.render();
-
