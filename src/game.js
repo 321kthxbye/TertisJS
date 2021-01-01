@@ -31,7 +31,8 @@ class Game {
         this.delta = 0; 
 
         this.board = new Board(10, 20);
-        this.bind(3, 0, 1)
+        
+        this.bind(3, 0, 0)
 
     }
 
