@@ -3,30 +3,8 @@
 
 let canvasMain = document.getElementById("mainCanvas");
 let game = new Game(canvasMain);
-let previousFrameTime = Date.now();
-let moveCounter = 500;
-// game.board.fields = 
-// ["..........",
-// "..........",
-// "..........",
-// "..........",
-// "..........",
-// "..........",
-// "..........",
-// "..........",
-// "..........",
-// "..........",
-// "..........",
-// "..........",
-// "..........",
-// "..........",
-// "..........",
-// "..........",
-// "..........",
-// "..........",
-// "..........",
-// "..76540123"]
-
+game.previousFrameTime = Date.now();
+// let moveCounter = 500;
 
  document.addEventListener("keydown", onKeydown);
 
@@ -66,17 +44,17 @@ function main() {
     game.render();
 
 
-    let current = Date.now();
-    let delta = current - previousFrameTime;
-    previousFrameTime = current;
-    moveCounter -= delta;
+    game.current = Date.now();
+    game.delta = game.current - game.previousFrameTime;
+    game.previousFrameTime = game.current;
+    game.moveCounter -= game.delta;
 
-    if(moveCounter <= 0) {
+    if(game.moveCounter <= 0) {
         if(!game.moveDown()){
             game.release();
             game.bind(3,0,game.getRandomInt(0,7));
         }
-        moveCounter = 500;
+        game.moveCounter = 500;
     }
     
     game.board.remComplLines();

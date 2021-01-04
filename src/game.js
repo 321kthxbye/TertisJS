@@ -28,11 +28,14 @@ class Game {
         this.bx = 3;
         this.by = 2;
 
+        this.previousFrameTime = 0;
+        this.current = 0;
         this.delta = 0; 
+        this.moveCounter = 0;
 
         this.board = new Board(10, 20);
         
-        game.bind(3,0,game.getRandomInt(0,7));
+        this.bind(3,0,this.getRandomInt(0,7));
 
     }
 
