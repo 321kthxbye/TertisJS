@@ -32,11 +32,17 @@ class Game {
 
         this.board = new Board(10, 20);
         
-        this.bind(3, 0, 0)
+        game.bind(3,0,game.getRandomInt(0,7));
 
     }
 
-    canPut(x, y, rotIndex){
+    getRandomInt(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min) + min);
+    }
+
+    canPut(x, y, rotIndex) {
         let rotation = this.tetromino.rotations[rotIndex];
 
         // Go trough testing tetromino
@@ -176,6 +182,8 @@ class Game {
     }
 
     drawBoard(){
+        // First clean old image
+        this.ctxF.clearRect(0,0,this.canvasForeground.width, this.canvasForeground.height)
         for(let row = 0; row < this.board.height; ++row){
             for(let col = 0; col < this.board.width; ++col){
                 let letter = this.board.fields[row].charAt(col);
@@ -191,8 +199,10 @@ class Game {
         this.ctxF.font = "20px Arial"
         this.ctxF.fillText("SCORE: 123456", (this.bx + 13) * 25, this.by + 50 )
     }
-
+    
     drawBackground(){
+        // First clean old image
+        this.ctxBg.clearRect(0,0,this.canvasBackgroundwidth, this.canvasBackground.height)
         for(let row = 0; row < this.board.height; ++row){
             for(let col = 0; col < this.board.width; ++col){
 

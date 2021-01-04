@@ -47,6 +47,8 @@ let moveCounter = 500;
             break;
         case "ArrowUp":
             game.drop();
+            game.release();
+            game.bind(3,0,game.getRandomInt(0,7));
             break;
         case "Space":
             game.rotate();
@@ -63,6 +65,7 @@ function main() {
     game.drawTetromino(game.index);
     game.render();
 
+
     let current = Date.now();
     let delta = current - previousFrameTime;
     previousFrameTime = current;
@@ -71,10 +74,13 @@ function main() {
     if(moveCounter <= 0) {
         if(!game.moveDown()){
             game.release();
-            game.bind(3,0,0);
+            game.bind(3,0,game.getRandomInt(0,7));
         }
         moveCounter = 500;
     }
+    
+    game.board.remComplLines();
+    
 }
 
 game.spritesheet.onload = function() {
