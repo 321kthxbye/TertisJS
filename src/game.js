@@ -21,9 +21,7 @@ class Game {
         this.canvasTetromino.width = this.mainCanvas.width;
         this.canvasTetromino.height = this.mainCanvas.height;
         this.ctxT = this.canvasTetromino.getContext("2d");
-        // Tetromino x y on board
-        this.tx = 3;
-        this.ty = 0;
+        
         // Board x y on canvas
         this.bx = 3;
         this.by = 2;
@@ -34,7 +32,7 @@ class Game {
         this.moveCounter = 0;
 
         this.board = new Board(10, 20);
-        
+        // Tetromino x y on board
         this.bind(3,0,this.getRandomInt(0,7));
 
     }
@@ -65,14 +63,14 @@ class Game {
     }
 
     put(x, y, index){
-        this.tx = x;
-        this.ty = y;
-        this.index = index;
+        this.tetromino.x = x;
+        this.tetromino.y = y;
+        this.tetromino.index = index;
     }
 
     moveLeft() {
-        if(this.canPut(this.tx - 1, this.ty, this.index)) {
-            this.put(this.tx - 1, this.ty, this.index);
+        if(this.canPut(this.tetromino.x - 1, this.tetromino.y, this.tetromino.index)) {
+            this.put(this.tetromino.x - 1, this.tetromino.y, this.tetromino.index);
             return true;
         }
         else 
@@ -80,8 +78,8 @@ class Game {
     }
 
     moveRight() {
-        if(this.canPut(this.tx + 1, this.ty, this.index)) {
-            this.put(this.tx + 1, this.ty, this.index);
+        if(this.canPut(this.tetromino.x + 1, this.tetromino.y, this.tetromino.index)) {
+            this.put(this.tetromino.x + 1, this.tetromino.y, this.tetromino.index);
             return true;
         }
         else 
@@ -89,8 +87,8 @@ class Game {
     }
 
     moveDown() {
-        if(this.canPut(this.tx, this.ty + 1, this.index)) {
-            this.put(this.tx, this.ty + 1, this.index);
+        if(this.canPut(this.tetromino.x, this.tetromino.y + 1, this.tetromino.index)) {
+            this.put(this.tetromino.x, this.tetromino.y + 1, this.tetromino.index);
             return true;
         }
         else 
@@ -98,8 +96,8 @@ class Game {
     }
     
     rotate() {
-        if (this.canPut(this.tx, this.ty, (this.index + 1) % 4)) {
-            this.put(this.tx, this.ty, (this.index + 1) % 4)
+        if (this.canPut(this.tetromino.x, this.tetromino.y, (this.tetromino.index + 1) % 4)) {
+            this.put(this.tetromino.x, this.tetromino.y, (this.tetromino.index + 1) % 4)
             return true;
         }
         else
@@ -113,9 +111,9 @@ class Game {
     }
 
     release() {
-        let x = this.tx;
-        let y = this.ty
-        let rotation = this.tetromino.rotations[this.index];
+        let x = this.tetromino.x;
+        let y = this.tetromino.y
+        let rotation = this.tetromino.rotations[this.tetromino.index];
 
         // Go trough testing tetromino
         for(let row = 0; row < 4; ++row){
@@ -133,19 +131,16 @@ class Game {
                 let line = this.board.fields[posy];
                 this.board.fields[posy] = line.slice(0,posx) + letter + line.slice(posx + 1, line.length);
                 this.tetromino = undefined;
-                this.tx = 0;
-                this.ty = 0;
-                this.index = 0;
 
             }
         }
     }
 
     bind(x, y, type){
-        this.tx = x
-        this.ty = y
-        this.index = 0
         this.tetromino = new Tetromino(type)
+        this.tetromino.x = x
+        this.tetromino.y = y
+        this.tetromino.index = 0
     }
         
 
@@ -160,8 +155,8 @@ class Game {
         this.ctxT.clearRect(0,0,this.canvasTetromino.width, this.canvasTetromino.height)
         let rot = this.tetromino.rotations[index]
         // Absolute position of tetromino on canvas
-        let x = this.tx + this.bx;
-        let y = this.ty + this.by;
+        let x = this.tetromino.x + this.bx;
+        let y = this.tetromino.y + this.by;
         // This creates separate line
         for(let row = 0; row < 4; ++row){
             let line = rot.slice(row * 4, row * 4 + 4);

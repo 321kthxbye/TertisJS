@@ -40,7 +40,7 @@ function main() {
     window.requestAnimationFrame(main);
     game.drawBackground();
     game.drawBoard();
-    game.drawTetromino(game.index);
+    game.drawTetromino(game.tetromino.index);
     game.render();
 
 

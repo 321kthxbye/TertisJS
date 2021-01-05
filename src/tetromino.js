@@ -3,6 +3,9 @@
 class Tetromino {
     constructor(type){
         this.type = type;
+        this.x = 0;
+        this.y = 0;
+        this.index = 0;
         
         switch(type){
             case 0:
