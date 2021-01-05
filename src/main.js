@@ -1,13 +1,6 @@
 "use strict";
 
 
-let canvasMain = document.getElementById("mainCanvas");
-let game = new Game(canvasMain);
-game.previousFrameTime = Date.now();
-// let moveCounter = 500;
-
- document.addEventListener("keydown", onKeydown);
-
  function onKeydown(e){
      console.log(e.code);
      if(e.cancelable)
@@ -36,13 +29,14 @@ game.previousFrameTime = Date.now();
      }
  }
 
+ document.addEventListener("keydown", onKeydown);
+
 function main() {
     window.requestAnimationFrame(main);
     game.drawBackground();
     game.drawBoard();
     game.drawTetromino(game.tetromino.index);
     game.render();
-
 
     game.current = Date.now();
     game.delta = game.current - game.previousFrameTime;
@@ -55,12 +49,18 @@ function main() {
             game.bind(3,0,game.getRandomInt(0,7));
         }
         game.moveCounter = 500;
-    }
-    
+    } 
     game.board.remComplLines();
     
 }
 
-game.spritesheet.onload = function() {
+function onload () {
+    window.game = new Game(document.getElementById("mainCanvas"));
+    game.previousFrameTime = Date.now();
     main();
 }
+
+window.addEventListener("load", onload);
+
+
+
