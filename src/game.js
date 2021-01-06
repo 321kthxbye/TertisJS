@@ -131,6 +131,7 @@ class Game {
                 let line = this.board.fields[posy];
                 this.board.fields[posy] = line.slice(0,posx) + letter + line.slice(posx + 1, line.length);
                 this.tetromino = undefined;
+                this.ghostTetromino = undefined;
 
             }
         }
@@ -141,6 +142,10 @@ class Game {
         this.tetromino.x = x
         this.tetromino.y = y
         this.tetromino.index = 0
+        this.ghostTetromino = new Tetromino(type)
+        this.ghostTetromino.x = x
+        this.ghostTetromino.y = y
+        this.ghostTetromino.index = 0
     }
         
 
@@ -150,13 +155,14 @@ class Game {
         this.ctxMain.drawImage(this.canvasTetromino, 0, 0);
     }
 
-    drawTetromino(index) {
+    drawTetromino(index, tetromino, alpha) {
         // First clean old image
         this.ctxT.clearRect(0,0,this.canvasTetromino.width, this.canvasTetromino.height)
-        let rot = this.tetromino.rotations[index]
+        this.ctxT.globalAlpha = alpha;
+        let rot = tetromino.rotations[index]
         // Absolute position of tetromino on canvas
-        let x = this.tetromino.x + this.bx;
-        let y = this.tetromino.y + this.by;
+        let x = tetromino.x + this.bx;
+        let y = tetromino.y + this.by;
         // This creates separate line
         for(let row = 0; row < 4; ++row){
             let line = rot.slice(row * 4, row * 4 + 4);
@@ -172,11 +178,11 @@ class Game {
                 }
                 else
                 {
-                    this.ctxT.drawImage(this.spritesheet,this.tetromino.type * 25, 0,25,25, aCol,aRow,25,25);
+                    this.ctxT.drawImage(this.spritesheet,tetromino.type * 25, 0,25,25, aCol,aRow,25,25);
                 }
             }
         }
-
+        this.ctxT.globalAlpha = 1;
     }
 
     drawBoard(){

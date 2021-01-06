@@ -35,7 +35,7 @@ function main() {
     window.requestAnimationFrame(main);
     game.drawBackground();
     game.drawBoard();
-    game.drawTetromino(game.tetromino.index);
+    game.drawTetromino(game.tetromino.index, game.tetromino, 1);
     game.render();
 
     game.current = Date.now();
