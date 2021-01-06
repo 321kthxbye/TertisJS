@@ -19,7 +19,8 @@
         case "ArrowUp":
             game.drop();
             game.release();
-            game.bind(3,0,game.getRandomInt(0,7));
+            game.bind(3,0,game.nextTetromino);
+            game.nextTetromino = new Tetromino(game.getRandomInt(0,7));
             break;
         case "Space":
             game.rotate();
@@ -51,7 +52,8 @@ function main() {
         
         if(!game.moveDown()){
             game.release();
-            game.bind(3,0,game.getRandomInt(0,7));
+            game.bind(3,0,game.nextTetromino);
+            game.nextTetromino = new Tetromino(game.getRandomInt(0,7));
         }
         game.moveCounter = 500;
     } 

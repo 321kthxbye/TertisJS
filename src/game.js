@@ -32,8 +32,9 @@ class Game {
         this.moveCounter = 0;
 
         this.board = new Board(10, 20);
-        // Tetromino x y on board
-        this.bind(3,0,this.getRandomInt(0,7));
+        // Tetromino x y on board, next type of tetromino
+        this.bind(3,0, new Tetromino(this.getRandomInt(0,7)));
+        this.nextTetromino = new Tetromino(this.getRandomInt(0,7));
 
     }
 
@@ -150,12 +151,12 @@ class Game {
         }
     }
 
-    bind(x, y, type){
-        this.tetromino = new Tetromino(type)
+    bind(x, y, tetromino){
+        this.tetromino = tetromino
         this.tetromino.x = x
         this.tetromino.y = y
         this.tetromino.index = 0
-        this.ghostTetromino = new Tetromino(type)
+        this.ghostTetromino = new Tetromino(tetromino.type)
         this.ghostTetromino.x = x
         this.ghostTetromino.y = y
         this.ghostTetromino.index = 0
