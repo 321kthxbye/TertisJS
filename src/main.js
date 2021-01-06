@@ -27,6 +27,8 @@
         default:
             break;
      }
+
+     game.ghost();
  }
 
  document.addEventListener("keydown", onKeydown);
@@ -35,8 +37,10 @@ function main() {
     window.requestAnimationFrame(main);
     game.drawBackground();
     game.drawBoard();
-    game.drawTetromino(game.tetromino.index, game.tetromino, 1);
+    game.ghost();
+    game.drawTetrominos();
     game.render();
+
 
     game.current = Date.now();
     game.delta = game.current - game.previousFrameTime;
@@ -44,6 +48,7 @@ function main() {
     game.moveCounter -= game.delta;
 
     if(game.moveCounter <= 0) {
+        
         if(!game.moveDown()){
             game.release();
             game.bind(3,0,game.getRandomInt(0,7));

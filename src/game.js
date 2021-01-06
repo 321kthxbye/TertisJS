@@ -43,8 +43,8 @@ class Game {
         return Math.floor(Math.random() * (max - min) + min);
     }
 
-    canPut(x, y, rotIndex) {
-        let rotation = this.tetromino.rotations[rotIndex];
+    canPut(x, y, rotIndex, tetromino) {
+        let rotation = tetromino.rotations[rotIndex];
 
         // Go trough testing tetromino
         for(let row = 0; row < 4; ++row) {
@@ -62,15 +62,15 @@ class Game {
         return true;
     }
 
-    put(x, y, index){
-        this.tetromino.x = x;
-        this.tetromino.y = y;
-        this.tetromino.index = index;
+    put(x, y, index, tetromino){
+        tetromino.x = x;
+        tetromino.y = y;
+        tetromino.index = index;
     }
 
     moveLeft() {
-        if(this.canPut(this.tetromino.x - 1, this.tetromino.y, this.tetromino.index)) {
-            this.put(this.tetromino.x - 1, this.tetromino.y, this.tetromino.index);
+        if(this.canPut(this.tetromino.x - 1, this.tetromino.y, this.tetromino.index, this.tetromino)) {
+            this.put(this.tetromino.x - 1, this.tetromino.y, this.tetromino.index, this.tetromino);
             return true;
         }
         else 
@@ -78,8 +78,8 @@ class Game {
     }
 
     moveRight() {
-        if(this.canPut(this.tetromino.x + 1, this.tetromino.y, this.tetromino.index)) {
-            this.put(this.tetromino.x + 1, this.tetromino.y, this.tetromino.index);
+        if(this.canPut(this.tetromino.x + 1, this.tetromino.y, this.tetromino.index, this.tetromino)) {
+            this.put(this.tetromino.x + 1, this.tetromino.y, this.tetromino.index, this.tetromino);
             return true;
         }
         else 
@@ -87,8 +87,8 @@ class Game {
     }
 
     moveDown() {
-        if(this.canPut(this.tetromino.x, this.tetromino.y + 1, this.tetromino.index)) {
-            this.put(this.tetromino.x, this.tetromino.y + 1, this.tetromino.index);
+        if(this.canPut(this.tetromino.x, this.tetromino.y + 1, this.tetromino.index, this.tetromino)) {
+            this.put(this.tetromino.x, this.tetromino.y + 1, this.tetromino.index, this.tetromino);
             return true;
         }
         else 
@@ -96,8 +96,8 @@ class Game {
     }
     
     rotate() {
-        if (this.canPut(this.tetromino.x, this.tetromino.y, (this.tetromino.index + 1) % 4)) {
-            this.put(this.tetromino.x, this.tetromino.y, (this.tetromino.index + 1) % 4)
+        if (this.canPut(this.tetromino.x, this.tetromino.y, (this.tetromino.index + 1) % 4, this.tetromino)) {
+            this.put(this.tetromino.x, this.tetromino.y, (this.tetromino.index + 1) % 4, this.tetromino)
             return true;
         }
         else
@@ -108,6 +108,19 @@ class Game {
         while (this.moveDown()) {
             continue;
         }
+    }
+
+    ghost() {
+        this.ghostTetromino.x = this.tetromino.x;
+        this.ghostTetromino.y = this.tetromino.y;
+        this.ghostTetromino.index = this.tetromino.index;
+        while(true) {
+            if (this.canPut(this.ghostTetromino.x, this.ghostTetromino.y + 1, this.ghostTetromino.index, this.ghostTetromino))
+            this.put(this.ghostTetromino.x, this.ghostTetromino.y + 1, this.ghostTetromino.index, this.ghostTetromino);
+            else
+                break;
+        }
+        
     }
 
     release() {
@@ -156,8 +169,6 @@ class Game {
     }
 
     drawTetromino(index, tetromino, alpha) {
-        // First clean old image
-        this.ctxT.clearRect(0,0,this.canvasTetromino.width, this.canvasTetromino.height)
         this.ctxT.globalAlpha = alpha;
         let rot = tetromino.rotations[index]
         // Absolute position of tetromino on canvas
@@ -183,6 +194,13 @@ class Game {
             }
         }
         this.ctxT.globalAlpha = 1;
+    }
+
+    drawTetrominos(){
+        // First clean old image
+        this.ctxT.clearRect(0,0,this.canvasTetromino.width, this.canvasTetromino.height)
+        this.drawTetromino(this.tetromino.index, this.tetromino, 1);
+        this.drawTetromino(this.ghostTetromino.index, this.ghostTetromino, 0.5);
     }
 
     drawBoard(){
