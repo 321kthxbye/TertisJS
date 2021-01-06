@@ -33,9 +33,9 @@ class Game {
 
         this.board = new Board(10, 20);
         // Tetromino x y on board, next type of tetromino
-        this.bind(3,0, new Tetromino(this.getRandomInt(0,7)));
-        this.nextTetromino = new Tetromino(this.getRandomInt(0,7));
-
+        this.bind(3,0, new Tetromino(this.getRandomInt(0,7), 3, 0));
+        this.nextTetromino = new Tetromino(this.getRandomInt(0,7), 12, 3);
+ 
     }
 
     getRandomInt(min, max) {
@@ -156,13 +156,12 @@ class Game {
         this.tetromino.x = x
         this.tetromino.y = y
         this.tetromino.index = 0
-        this.ghostTetromino = new Tetromino(tetromino.type)
+        this.ghostTetromino = new Tetromino(tetromino.type, tetromino.x, tetromino.y)
         this.ghostTetromino.x = x
         this.ghostTetromino.y = y
         this.ghostTetromino.index = 0
     }
         
-
     render(){
         this.ctxMain.drawImage(this.canvasBackground, 0, 0);
         this.ctxMain.drawImage(this.canvasForeground, 0, 0);
@@ -190,7 +189,7 @@ class Game {
                 }
                 else
                 {
-                    this.ctxT.drawImage(this.spritesheet,tetromino.type * 25, 0,25,25, aCol,aRow,25,25);
+                    this.ctxT.drawImage(this.spritesheet, tetromino.type * 25, 0,25,25, aCol,aRow,25,25);
                 }
             }
         }
@@ -202,6 +201,7 @@ class Game {
         this.ctxT.clearRect(0,0,this.canvasTetromino.width, this.canvasTetromino.height)
         this.drawTetromino(this.tetromino.index, this.tetromino, 1);
         this.drawTetromino(this.ghostTetromino.index, this.ghostTetromino, 0.5);
+        this.drawTetromino(this.nextTetromino.index, this.nextTetromino, 1);
     }
 
     drawBoard(){
@@ -221,6 +221,7 @@ class Game {
         this.ctxF.fillStyle = "white";
         this.ctxF.font = "20px Arial"
         this.ctxF.fillText("SCORE: 123456", (this.bx + 13) * 25, this.by + 50 )
+        this.ctxF.fillText("NEXT:", (this.bx + 13) * 25, this.by + 100 )
     }
     
     drawBackground(){

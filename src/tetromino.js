@@ -1,10 +1,10 @@
 "use strict";
 
 class Tetromino {
-    constructor(type){
+    constructor(type, x, y){
         this.type = type;
-        this.x = 0;
-        this.y = 0;
+        this.x = x;
+        this.y = y;
         this.index = 0;
         
         switch(type){

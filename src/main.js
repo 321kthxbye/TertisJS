@@ -20,7 +20,7 @@
             game.drop();
             game.release();
             game.bind(3,0,game.nextTetromino);
-            game.nextTetromino = new Tetromino(game.getRandomInt(0,7));
+            game.nextTetromino = new Tetromino(game.getRandomInt(0,7), 12, 3);
             break;
         case "Space":
             game.rotate();
@@ -36,6 +36,7 @@
 
 function main() {
     window.requestAnimationFrame(main);
+    game.ctxMain.clearRect(0,0,game.mainCanvas.width, game.mainCanvas.height);
     game.drawBackground();
     game.drawBoard();
     game.ghost();
@@ -53,7 +54,7 @@ function main() {
         if(!game.moveDown()){
             game.release();
             game.bind(3,0,game.nextTetromino);
-            game.nextTetromino = new Tetromino(game.getRandomInt(0,7));
+            game.nextTetromino = new Tetromino(game.getRandomInt(0,7), 12, 3);
         }
         game.moveCounter = 500;
     } 
