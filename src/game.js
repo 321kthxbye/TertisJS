@@ -2,6 +2,8 @@
 
 class Game {
     constructor(mainCanvas) {
+        this.status = "paused";
+
         this.spritesheet = new Image();
         this.spritesheet.src = "res/sprites.png";
         this.mainCanvas = mainCanvas;
