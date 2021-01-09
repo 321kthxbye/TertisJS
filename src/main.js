@@ -57,7 +57,7 @@ function tick() {
     game.ghost();
     game.drawTetrominos();
     game.drawDialogues();
-    game.render();
+
 
     if(game.status === "playing") {
         game.current = Date.now();

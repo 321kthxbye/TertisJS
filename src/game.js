@@ -10,21 +10,6 @@ class Game {
         this.mainCanvas = mainCanvas;
         this.ctxMain = mainCanvas.getContext('2d');
         
-        this.canvasBackground = document.createElement("canvas");
-        this.canvasBackground.width = this.mainCanvas.width;
-        this.canvasBackground.height = this.mainCanvas.height;
-        this.ctxBg = this.canvasBackground.getContext("2d");
-
-        this.canvasForeground = document.createElement("canvas");
-        this.canvasForeground.width = this.mainCanvas.width;
-        this.canvasForeground.height = this.mainCanvas.height;
-        this.ctxF = this.canvasForeground.getContext("2d");
-
-        this.canvasTetromino = document.createElement("canvas");
-        this.canvasTetromino.width = this.mainCanvas.width;
-        this.canvasTetromino.height = this.mainCanvas.height;
-        this.ctxT = this.canvasTetromino.getContext("2d");
-        
         // Board x y on canvas
         this.bx = 3;
         this.by = 2;
@@ -188,15 +173,9 @@ class Game {
         this.ghostTetromino.y = y
         this.ghostTetromino.index = 0
     }
-        
-    render(){
-        this.ctxMain.drawImage(this.canvasBackground, 0, 0);
-        this.ctxMain.drawImage(this.canvasForeground, 0, 0);
-        this.ctxMain.drawImage(this.canvasTetromino, 0, 0);
-    }
 
     drawTetromino(index, tetromino, alpha) {
-        this.ctxT.globalAlpha = alpha;
+        this.ctxMain.globalAlpha = alpha;
         let rot = tetromino.rotations[index]
         // Absolute position of tetromino on canvas
         let x = tetromino.x + this.bx;
@@ -216,16 +195,16 @@ class Game {
                 }
                 else
                 {
-                    this.ctxT.drawImage(this.spritesheet, tetromino.type * 25, 0,25,25, aCol,aRow,25,25);
+                    this.ctxMain.drawImage(this.spritesheet, tetromino.type * 25, 0,25,25, aCol,aRow,25,25);
                 }
             }
         }
-        this.ctxT.globalAlpha = 1;
+        this.ctxMain.globalAlpha = 1;
     }
 
     drawTetrominos(){
         // First clean old image
-        this.ctxT.clearRect(0,0,this.canvasTetromino.width, this.canvasTetromino.height)
+        //this.ctxMain.clearRect(0,0,this.canvasTetromino.width, this.canvasTetromino.height)
         this.drawTetromino(this.tetromino.index, this.tetromino, 1);
         this.drawTetromino(this.ghostTetromino.index, this.ghostTetromino, 0.5);
         this.drawTetromino(this.nextTetromino.index, this.nextTetromino, 1);
@@ -234,7 +213,7 @@ class Game {
     drawBoard()
     {
         // First clean old image
-        this.ctxF.clearRect(0,0,this.canvasForeground.width, this.canvasForeground.height)
+        //this.ctxMain.clearRect(0,0,this.canvasForeground.width, this.canvasForeground.height)
         for(let row = 0; row < this.board.height; ++row){
             for(let col = 0; col < this.board.width; ++col){
                 let letter = this.board.fields[row].charAt(col);
@@ -242,14 +221,14 @@ class Game {
                     continue;
                 let index = parseInt(letter);
 
-                this.ctxF.drawImage(this.spritesheet, index * 25, 0,25,25, (this.bx + col) * 25, (this.by + row) * 25, 25, 25);
+                this.ctxMain.drawImage(this.spritesheet, index * 25, 0,25,25, (this.bx + col) * 25, (this.by + row) * 25, 25, 25);
             }
         }
 
-        this.ctxF.fillStyle = "white";
-        this.ctxF.font = "20px Arial"
-        this.ctxF.fillText("SCORE: " + this.score, (this.bx + 13) * 25, this.by + 50 )
-        this.ctxF.fillText("NEXT:", (this.bx + 13) * 25, this.by + 100 )
+        this.ctxMain.fillStyle = "white";
+        this.ctxMain.font = "20px Arial"
+        this.ctxMain.fillText("SCORE: " + this.score, (this.bx + 13) * 25, this.by + 50 )
+        this.ctxMain.fillText("NEXT:", (this.bx + 13) * 25, this.by + 100 )
 
     }
 
@@ -257,28 +236,28 @@ class Game {
         
 
         if(this.status == "paused"){
-            this.ctxT.fillStyle = "white";
-            this.ctxT.font = "30px Arial"
-            this.ctxT.fillText("PAUSE", (this.bx + 3) * 25, this.by + 300 )
-            this.ctxT.fillStyle = "black";
-            this.ctxT.strokeText("PAUSE", (this.bx + 3) * 25, this.by + 300 )
+            this.ctxMain.fillStyle = "white";
+            this.ctxMain.font = "30px Arial"
+            this.ctxMain.fillText("PAUSE", (this.bx + 3) * 25, this.by + 300 )
+            this.ctxMain.fillStyle = "black";
+            this.ctxMain.strokeText("PAUSE", (this.bx + 3) * 25, this.by + 300 )
         }
         if (this.status === "gameOver") {
-            this.ctxT.fillStyle = "white";
-            this.ctxT.font = "30px Arial"
-            this.ctxT.fillText("GAME OVER", (this.bx + 1) * 25, this.by + 300 )
-            this.ctxT.fillStyle = "black";
-            this.ctxT.strokeText("GAME OVER", (this.bx + 1) * 25, this.by + 300 )
+            this.ctxMain.fillStyle = "white";
+            this.ctxMain.font = "30px Arial"
+            this.ctxMain.fillText("GAME OVER", (this.bx + 1) * 25, this.by + 300 )
+            this.ctxMain.fillStyle = "black";
+            this.ctxMain.strokeText("GAME OVER", (this.bx + 1) * 25, this.by + 300 )
         }
     }
     
     drawBackground(){
         // First clean old image
-        this.ctxBg.clearRect(0,0,this.canvasBackgroundwidth, this.canvasBackground.height)
+        //this.ctxBg.clearRect(0,0,this.canvasBackgroundwidth, this.canvasBackground.height)
         for(let row = 0; row < this.board.height; ++row){
             for(let col = 0; col < this.board.width; ++col){
 
-                this.ctxBg.drawImage(this.spritesheet, 7 * 25, 0,25,25, (this.bx + col) * 25, (this.by + row) * 25, 25, 25);
+                this.ctxMain.drawImage(this.spritesheet, 7 * 25, 0,25,25, (this.bx + col) * 25, (this.by + row) * 25, 25, 25);
             }
         }
     }
