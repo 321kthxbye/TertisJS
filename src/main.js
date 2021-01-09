@@ -41,6 +41,8 @@
     }
     else if(game.status === "gameOver") {
         console.log("GAME OVER");
+        if(e.code === "Enter")
+            game = new Game(document.getElementById("mainCanvas"))
     }
      
  }
@@ -54,6 +56,7 @@ function tick() {
     game.drawBoard();
     game.ghost();
     game.drawTetrominos();
+    game.drawDialogues();
     game.render();
 
     if(game.status === "playing") {
@@ -62,16 +65,17 @@ function tick() {
         game.previousFrameTime = game.current;
         game.moveCounter -= game.delta;
 
-        if(game.moveCounter <= 0) {
-            
+        if(game.moveCounter <= 0) {         
             if(!game.moveDown()){
+                if(game.tetromino.y === 0)
+                    game.status = "gameOver";
                 game.release();
                 game.bind(3,0,game.nextTetromino);
                 game.nextTetromino = new Tetromino(game.getRandomInt(0,7), 12, 3);
             }
             game.moveCounter = 500;
         } 
-        game.board.remComplLines();
+        game.score += game.getPoints(game.board.remComplLines());
     } 
     else if (game.status === "paused") {
         console.log("PAUSED");

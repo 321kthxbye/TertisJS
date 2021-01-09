@@ -2,7 +2,8 @@
 
 class Game {
     constructor(mainCanvas) {
-        this.status = "paused";
+        this.status = "playing";
+        this.score = 0;
 
         this.spritesheet = new Image();
         this.spritesheet.src = "res/sprites.png";
@@ -44,6 +45,30 @@ class Game {
         min = Math.ceil(min);
         max = Math.floor(max);
         return Math.floor(Math.random() * (max - min) + min);
+    }
+    
+    getPoints(lines) {
+        let score = 0;
+
+        switch(lines) {
+            case 1:
+                score = 40;
+                break;
+            case 2:
+                score = 100;
+                break;
+            case 3:
+                score = 300;
+                break;
+            case 4:
+                score = 1200;
+                break;
+            default:
+                score = 0;
+                break;
+        }
+
+        return score;
     }
 
     canPut(x, y, rotIndex, tetromino) {
@@ -206,7 +231,8 @@ class Game {
         this.drawTetromino(this.nextTetromino.index, this.nextTetromino, 1);
     }
 
-    drawBoard(){
+    drawBoard()
+    {
         // First clean old image
         this.ctxF.clearRect(0,0,this.canvasForeground.width, this.canvasForeground.height)
         for(let row = 0; row < this.board.height; ++row){
@@ -222,8 +248,28 @@ class Game {
 
         this.ctxF.fillStyle = "white";
         this.ctxF.font = "20px Arial"
-        this.ctxF.fillText("SCORE: 123456", (this.bx + 13) * 25, this.by + 50 )
+        this.ctxF.fillText("SCORE: " + this.score, (this.bx + 13) * 25, this.by + 50 )
         this.ctxF.fillText("NEXT:", (this.bx + 13) * 25, this.by + 100 )
+
+    }
+
+    drawDialogues() {
+        
+
+        if(this.status == "paused"){
+            this.ctxT.fillStyle = "white";
+            this.ctxT.font = "30px Arial"
+            this.ctxT.fillText("PAUSE", (this.bx + 3) * 25, this.by + 300 )
+            this.ctxT.fillStyle = "black";
+            this.ctxT.strokeText("PAUSE", (this.bx + 3) * 25, this.by + 300 )
+        }
+        if (this.status === "gameOver") {
+            this.ctxT.fillStyle = "white";
+            this.ctxT.font = "30px Arial"
+            this.ctxT.fillText("GAME OVER", (this.bx + 1) * 25, this.by + 300 )
+            this.ctxT.fillStyle = "black";
+            this.ctxT.strokeText("GAME OVER", (this.bx + 1) * 25, this.by + 300 )
+        }
     }
     
     drawBackground(){
