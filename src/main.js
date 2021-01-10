@@ -9,13 +9,13 @@
     if(game.status === "playing") {
         switch (e.code) {
             case "ArrowRight":
-                game.moveRight();
+                game.move(1, 0);
                 break;
            case "ArrowLeft":
-                game.moveLeft();
+                game.move(-1, 0);
                break;
            case "ArrowDown":
-                game.moveDown();
+                game.move(0, 1);
                break;
            case "ArrowUp":
                 game.drop();
@@ -67,7 +67,7 @@ function tick() {
         game.moveCounter -= game.delta;
 
         if(game.moveCounter <= 0) {         
-            if(!game.moveDown()){
+            if(!game.move(0, 1)){
                 if(game.tetromino.y === 0)
                     game.status = "gameOver";
                 game.release();

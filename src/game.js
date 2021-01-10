@@ -75,33 +75,16 @@ class Game {
         tetromino.index = index;
     }
 
-    moveLeft() {
-        if(this.canPut(this.tetromino.x - 1, this.tetromino.y, this.tetromino.index, this.tetromino)) {
-            this.put(this.tetromino.x - 1, this.tetromino.y, this.tetromino.index, this.tetromino);
-            return true;
-        }
-        else 
-            return false;
-    }
 
-    moveRight() {
-        if(this.canPut(this.tetromino.x + 1, this.tetromino.y, this.tetromino.index, this.tetromino)) {
-            this.put(this.tetromino.x + 1, this.tetromino.y, this.tetromino.index, this.tetromino);
+    move(xOff, yOff) {
+        if(this.canPut(this.tetromino.x + xOff, this.tetromino.y + yOff, this.tetromino.index, this.tetromino)) {
+            this.put(this.tetromino.x + xOff, this.tetromino.y + yOff, this.tetromino.index, this.tetromino);
             return true;
         }
         else 
             return false;
     }
-
-    moveDown() {
-        if(this.canPut(this.tetromino.x, this.tetromino.y + 1, this.tetromino.index, this.tetromino)) {
-            this.put(this.tetromino.x, this.tetromino.y + 1, this.tetromino.index, this.tetromino);
-            return true;
-        }
-        else 
-            return false;
-    }
-    
+   
     rotate() {
         if (this.canPut(this.tetromino.x, this.tetromino.y, (this.tetromino.index + 1) % 4, this.tetromino)) {
             this.put(this.tetromino.x, this.tetromino.y, (this.tetromino.index + 1) % 4, this.tetromino)
