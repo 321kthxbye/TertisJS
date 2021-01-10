@@ -1,10 +1,12 @@
 "use strict";
 
 class Board {
-    constructor(width, height) {
+    constructor(width, height, x, y) {
         this.width = width;
         this.height = height;
         this.fields = [];
+        this.x = x;
+        this.y = y
 
         // Create list of rows
         for(let i = 0; i < this.height; ++i) {
