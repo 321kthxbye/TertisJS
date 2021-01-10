@@ -55,8 +55,8 @@ function tick() {
     game.renderer.drawBackground(game.board);
     game.renderer.drawBoard(game.board, game.score);
     game.ghost();
-    game.drawTetrominos();
-    game.drawDialogues();
+    game.renderer.drawTetrominos(game.tetromino, game.ghostTetromino, game.nextTetromino, game.board);
+    game.renderer.drawDialogues(game.status, game.board);
 
 
     if(game.status === "playing") {
