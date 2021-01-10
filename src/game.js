@@ -9,17 +9,14 @@ class Game {
         this.spritesheet.src = "res/sprites.png";
         this.mainCanvas = mainCanvas;
         this.ctxMain = mainCanvas.getContext('2d');
-        
-        // Board x y on canvas
-        this.bx = 3;
-        this.by = 2;
 
         this.previousFrameTime = 0;
         this.current = 0;
         this.delta = 0; 
         this.moveCounter = 0;
+        // Board x y on canvas
+        this.board = new Board(10, 20, 3, 2);
 
-        this.board = new Board(10, 20);
         // Tetromino x y on board, next type of tetromino
         this.bind(3,0, new Tetromino(this.getRandomInt(0,7), 3, 0));
         this.nextTetromino = new Tetromino(this.getRandomInt(0,7), 12, 3);
@@ -178,8 +175,8 @@ class Game {
         this.ctxMain.globalAlpha = alpha;
         let rot = tetromino.rotations[index]
         // Absolute position of tetromino on canvas
-        let x = tetromino.x + this.bx;
-        let y = tetromino.y + this.by;
+        let x = tetromino.x + this.board.x;
+        let y = tetromino.y + this.board.y;
         // This creates separate line
         for(let row = 0; row < 4; ++row){
             let line = rot.slice(row * 4, row * 4 + 4);
@@ -203,8 +200,6 @@ class Game {
     }
 
     drawTetrominos(){
-        // First clean old image
-        //this.ctxMain.clearRect(0,0,this.canvasTetromino.width, this.canvasTetromino.height)
         this.drawTetromino(this.tetromino.index, this.tetromino, 1);
         this.drawTetromino(this.ghostTetromino.index, this.ghostTetromino, 0.5);
         this.drawTetromino(this.nextTetromino.index, this.nextTetromino, 1);
@@ -212,8 +207,6 @@ class Game {
 
     drawBoard()
     {
-        // First clean old image
-        //this.ctxMain.clearRect(0,0,this.canvasForeground.width, this.canvasForeground.height)
         for(let row = 0; row < this.board.height; ++row){
             for(let col = 0; col < this.board.width; ++col){
                 let letter = this.board.fields[row].charAt(col);
@@ -221,43 +214,39 @@ class Game {
                     continue;
                 let index = parseInt(letter);
 
-                this.ctxMain.drawImage(this.spritesheet, index * 25, 0,25,25, (this.bx + col) * 25, (this.by + row) * 25, 25, 25);
+                this.ctxMain.drawImage(this.spritesheet, index * 25, 0,25,25, (this.board.x + col) * 25, (this.board.y + row) * 25, 25, 25);
             }
         }
 
         this.ctxMain.fillStyle = "white";
         this.ctxMain.font = "20px Arial"
-        this.ctxMain.fillText("SCORE: " + this.score, (this.bx + 13) * 25, this.by + 50 )
-        this.ctxMain.fillText("NEXT:", (this.bx + 13) * 25, this.by + 100 )
+        this.ctxMain.fillText("SCORE: " + this.score, (this.board.x + 13) * 25, this.board.y + 50 )
+        this.ctxMain.fillText("NEXT:", (this.board.x + 13) * 25, this.board.y + 100 )
 
     }
 
     drawDialogues() {
-        
-
         if(this.status == "paused"){
             this.ctxMain.fillStyle = "white";
             this.ctxMain.font = "30px Arial"
-            this.ctxMain.fillText("PAUSE", (this.bx + 3) * 25, this.by + 300 )
+            this.ctxMain.fillText("PAUSE", (this.board.x + 3) * 25, this.board.y + 300 )
             this.ctxMain.fillStyle = "black";
-            this.ctxMain.strokeText("PAUSE", (this.bx + 3) * 25, this.by + 300 )
+            this.ctxMain.strokeText("PAUSE", (this.board.x + 3) * 25, this.board.y + 300 )
         }
         if (this.status === "gameOver") {
             this.ctxMain.fillStyle = "white";
             this.ctxMain.font = "30px Arial"
-            this.ctxMain.fillText("GAME OVER", (this.bx + 1) * 25, this.by + 300 )
+            this.ctxMain.fillText("GAME OVER", (this.board.x + 1) * 25, this.board.y + 300 )
             this.ctxMain.fillStyle = "black";
-            this.ctxMain.strokeText("GAME OVER", (this.bx + 1) * 25, this.by + 300 )
+            this.ctxMain.strokeText("GAME OVER", (this.board.x + 1) * 25, this.board.y + 300 )
         }
     }
     
     drawBackground(){
-        // First clean old image
-        //this.ctxBg.clearRect(0,0,this.canvasBackgroundwidth, this.canvasBackground.height)
         for(let row = 0; row < this.board.height; ++row){
             for(let col = 0; col < this.board.width; ++col){
 
-                this.ctxMain.drawImage(this.spritesheet, 7 * 25, 0,25,25, (this.bx + col) * 25, (this.by + row) * 25, 25, 25);
+                this.ctxMain.drawImage(this.spritesheet, 7 * 25, 0,25,25, (this.board.x + col) * 25, (this.board.y + row) * 25, 25, 25);
             }
         }
     }
