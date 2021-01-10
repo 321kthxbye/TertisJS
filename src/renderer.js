@@ -9,6 +9,10 @@ class Renderer {
         this.ctxMain = mainCanvas.getContext('2d');
     }
 
+    clear(){
+        this.ctxMain.clearRect(0,0,this.mainCanvas.width, this.mainCanvas.height);
+    }
+
     drawDialogues(status, board) {
         if(status == "paused"){
             this.ctxMain.fillStyle = "white";

@@ -51,7 +51,8 @@ document.addEventListener("keydown", onKeydown);
 
 function tick() {
     window.requestAnimationFrame(tick);
-    game.ctxMain.clearRect(0,0,game.mainCanvas.width, game.mainCanvas.height);
+    //game.renderer.ctxMain.clearRect(0,0,game.mainCanvas.width, game.mainCanvas.height);
+    game.renderer.clear();
     game.renderer.drawBackground(game.board);
     game.renderer.drawBoard(game.board, game.score);
     game.ghost();
