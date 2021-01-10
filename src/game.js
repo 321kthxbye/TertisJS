@@ -95,7 +95,7 @@ class Game {
     }
 
     drop() {
-        while (this.moveDown()) {
+        while (this.move(0, 1)) {
             continue;
         }
     }
