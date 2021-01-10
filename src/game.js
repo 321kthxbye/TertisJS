@@ -9,6 +9,7 @@ class Game {
         this.spritesheet.src = "res/sprites.png";
         this.mainCanvas = mainCanvas;
         this.ctxMain = mainCanvas.getContext('2d');
+        this.renderer = new Renderer();
 
         this.previousFrameTime = 0;
         this.current = 0;
@@ -205,25 +206,25 @@ class Game {
         this.drawTetromino(this.nextTetromino.index, this.nextTetromino, 1);
     }
 
-    drawBoard()
-    {
-        for(let row = 0; row < this.board.height; ++row){
-            for(let col = 0; col < this.board.width; ++col){
-                let letter = this.board.fields[row].charAt(col);
-                if(letter === ".")
-                    continue;
-                let index = parseInt(letter);
+    // drawBoard()
+    // {
+    //     for(let row = 0; row < this.board.height; ++row){
+    //         for(let col = 0; col < this.board.width; ++col){
+    //             let letter = this.board.fields[row].charAt(col);
+    //             if(letter === ".")
+    //                 continue;
+    //             let index = parseInt(letter);
 
-                this.ctxMain.drawImage(this.spritesheet, index * 25, 0,25,25, (this.board.x + col) * 25, (this.board.y + row) * 25, 25, 25);
-            }
-        }
+    //             this.ctxMain.drawImage(this.spritesheet, index * 25, 0,25,25, (this.board.x + col) * 25, (this.board.y + row) * 25, 25, 25);
+    //         }
+    //     }
 
-        this.ctxMain.fillStyle = "white";
-        this.ctxMain.font = "20px Arial"
-        this.ctxMain.fillText("SCORE: " + this.score, (this.board.x + 13) * 25, this.board.y + 50 )
-        this.ctxMain.fillText("NEXT:", (this.board.x + 13) * 25, this.board.y + 100 )
+    //     this.ctxMain.fillStyle = "white";
+    //     this.ctxMain.font = "20px Arial"
+    //     this.ctxMain.fillText("SCORE: " + this.score, (this.board.x + 13) * 25, this.board.y + 50 )
+    //     this.ctxMain.fillText("NEXT:", (this.board.x + 13) * 25, this.board.y + 100 )
 
-    }
+    // }
 
     drawDialogues() {
         if(this.status == "paused"){
@@ -242,12 +243,12 @@ class Game {
         }
     }
     
-    drawBackground(){
-        for(let row = 0; row < this.board.height; ++row){
-            for(let col = 0; col < this.board.width; ++col){
+    // drawBackground(){
+    //     for(let row = 0; row < this.board.height; ++row){
+    //         for(let col = 0; col < this.board.width; ++col){
 
-                this.ctxMain.drawImage(this.spritesheet, 7 * 25, 0,25,25, (this.board.x + col) * 25, (this.board.y + row) * 25, 25, 25);
-            }
-        }
-    }
+    //             this.ctxMain.drawImage(this.spritesheet, 7 * 25, 0,25,25, (this.board.x + col) * 25, (this.board.y + row) * 25, 25, 25);
+    //         }
+    //     }
+    // }
 }
