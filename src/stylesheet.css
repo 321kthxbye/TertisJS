@@ -1,4 +1,5 @@
 .container {
+    background-color: rgb(156, 156, 156);
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
@@ -13,6 +14,27 @@
     color: white;
 }
 
+.version {
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+}
+
 body {
     background-color: rgb(156, 156, 156);
+}
+
+.logo {
+    width: 250px;
+    height: 75px;
+    animation: mymove 5s infinite;
+}
+
+@keyframes mymove {
+
+    0% { transform: translateY(0px); background: url("../res/logo2.png") no-repeat;}
+    50% { transform: translateY(-10px); background: url("../res/logo2.png") no-repeat;}
+    100% { transform: translateY(0px); background: url("../res/logo2.png") no-repeat;}
+    /* 50% { transform: translateY(0px); }
+    75% { transform: translateY(-5px); }
+    100% { transform: translateY(0px); } */
 }
