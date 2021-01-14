@@ -70,9 +70,11 @@ function tick() {
             if(!game.move(0, 1)){
                 if(game.tetromino.y === 0)
                     game.status = "gameOver";
-                game.release();
-                game.bind(3,0,game.nextTetromino);
-                game.nextTetromino = new Tetromino(game.getRandomInt(0,7), 12, 3);
+                else {
+                        game.release();
+                        game.bind(3,0,game.nextTetromino);
+                        game.nextTetromino = new Tetromino(game.getRandomInt(0,7), 12, 3);
+                    }
             }
             game.moveCounter = 500;
         } 

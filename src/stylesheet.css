@@ -1,0 +1,18 @@
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; 
+    min-height: 100vh;
+  }
+
+.createdBy {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    color: white;
+}
+
+body {
+    background-color: rgb(156, 156, 156);
+}
