@@ -20,8 +20,12 @@
            case "ArrowUp":
                 game.drop();
                 game.release();
-                game.bind(3,0,game.nextTetromino);
-                game.nextTetromino = new Tetromino(game.getRandomInt(0,7), 12, 3);
+                if(game.canPut(3, 0, 0, game.nextTetromino)) {
+                    game.bind(3,0,game.nextTetromino);
+                    game.nextTetromino = new Tetromino(game.getRandomInt(0,7), 12, 3);
+                }
+                else
+                    game.status = "gameOver";  
                break;
            case "Space":
                 game.rotate();
@@ -68,13 +72,13 @@ function tick() {
 
         if(game.moveCounter <= 0) {         
             if(!game.move(0, 1)){
-                if(game.tetromino.y === 0)
-                    game.status = "gameOver";
-                else {
-                        game.release();
-                        game.bind(3,0,game.nextTetromino);
-                        game.nextTetromino = new Tetromino(game.getRandomInt(0,7), 12, 3);
-                    }
+                game.release();
+                if(game.canPut(3, 0, 0, game.nextTetromino)) {
+                    game.bind(3,0,game.nextTetromino);
+                    game.nextTetromino = new Tetromino(game.getRandomInt(0,7), 12, 3);
+                }
+                else
+                    game.status = "gameOver";                         
             }
             game.moveCounter = 500;
         } 
