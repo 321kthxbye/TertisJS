@@ -101,16 +101,17 @@ class Game {
     }
 
     ghost() {
-        this.ghostTetromino.x = this.tetromino.x;
-        this.ghostTetromino.y = this.tetromino.y;
-        this.ghostTetromino.index = this.tetromino.index;
-        while(true) {
-            if (this.canPut(this.ghostTetromino.x, this.ghostTetromino.y + 1, this.ghostTetromino.index, this.ghostTetromino))
-            this.put(this.ghostTetromino.x, this.ghostTetromino.y + 1, this.ghostTetromino.index, this.ghostTetromino);
-            else
-                break;
+        if(this.tetromino !== undefined) {
+            this.ghostTetromino.x = this.tetromino.x;
+            this.ghostTetromino.y = this.tetromino.y;
+            this.ghostTetromino.index = this.tetromino.index;
+            while(true) {
+                if (this.canPut(this.ghostTetromino.x, this.ghostTetromino.y + 1, this.ghostTetromino.index, this.ghostTetromino))
+                this.put(this.ghostTetromino.x, this.ghostTetromino.y + 1, this.ghostTetromino.index, this.ghostTetromino);
+                else
+                    break;
+            }
         }
-        
     }
 
     release() {

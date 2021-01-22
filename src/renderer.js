@@ -31,7 +31,8 @@ class Renderer {
     }
 
     drawTetromino(tetromino, alpha, board) {
-        this.ctxMain.globalAlpha = alpha;
+        if(tetromino !== undefined) {
+            this.ctxMain.globalAlpha = alpha;
         let rot = tetromino.rotations[tetromino.index]
         // Absolute position of tetromino on canvas
         let x = tetromino.x + board.x;
@@ -56,6 +57,7 @@ class Renderer {
             }
         }
         this.ctxMain.globalAlpha = 1;
+        }
     }
 
     drawTetrominos(tetromino, ghostTetromino, nextTetromino, board){
