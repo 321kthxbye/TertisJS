@@ -26,7 +26,7 @@
                 }
                 else
                     game.status = "gameOver";  
-               break;
+                break;
            case "Space":
                 game.rotate();
                 break;
@@ -78,7 +78,8 @@ function tick() {
                     game.nextTetromino = new Tetromino(game.getRandomInt(0,7), 12, 3);
                 }
                 else
-                    game.status = "gameOver";                         
+                    
+                game.status = "gameOver";                         
             }
             game.moveCounter = 500;
         } 

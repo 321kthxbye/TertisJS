@@ -17,7 +17,6 @@ class Game {
         this.nextTetromino = new Tetromino(this.getRandomInt(0,7), 12, 3);
 
         this.renderer = new Renderer();
- 
     }
 
     getRandomInt(min, max) {
@@ -77,8 +76,11 @@ class Game {
 
 
     move(xOff, yOff) {
-        if(this.canPut(this.tetromino.x + xOff, this.tetromino.y + yOff, this.tetromino.index, this.tetromino)) {
-            this.put(this.tetromino.x + xOff, this.tetromino.y + yOff, this.tetromino.index, this.tetromino);
+        let x = this.tetromino.x + xOff;
+        let y = this.tetromino.y + yOff;
+
+        if(this.canPut(x, y, this.tetromino.index, this.tetromino)) {
+            this.put(x, y, this.tetromino.index, this.tetromino);
             return true;
         }
         else 
@@ -86,12 +88,18 @@ class Game {
     }
    
     rotate() {
-        if (this.canPut(this.tetromino.x, this.tetromino.y, (this.tetromino.index + 1) % 4, this.tetromino)) {
-            this.put(this.tetromino.x, this.tetromino.y, (this.tetromino.index + 1) % 4, this.tetromino)
-            return true;
+        let x = this.tetromino.x;
+        let y = this.tetromino.y;
+        let index = (this.tetromino.index + 1) % 4;
+        let xOff = [0, 1, 2, -1, -2];
+
+        for(let i = 0; i < xOff.length; ++i) {
+            if (this.canPut(x + xOff[i], y, index, this.tetromino)) {
+                this.put(x + xOff[i], y, index, this.tetromino)
+                return true;
+            }
         }
-        else
-            return false;
+        return false;
     }
 
     drop() {
