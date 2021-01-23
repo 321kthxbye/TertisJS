@@ -19,6 +19,7 @@
                break;
            case "ArrowUp":
                 game.drop();
+                game.soundCollection.playHitsound();
                 game.release();
                 if(game.canPut(3, 0, 0, game.nextTetromino)) {
                     game.bind(3,0,game.nextTetromino);
@@ -28,9 +29,12 @@
                     game.status = "gameOver";  
                 break;
            case "Space":
-                game.rotate();
+                if(game.rotate()){
+                    game.soundCollection.playRotationsound();
+                }
                 break;
             case "Enter":
+                game.soundCollection.playPausesound();
                 game.status = "paused";
                 break;
            default:
@@ -40,8 +44,10 @@
     }
     else if(game.status === "paused") {
         console.log("PAUSE");
-        if(e.code === "Enter")
-            game.status = "playing";        
+        if(e.code === "Enter") {
+            game.soundCollection.playPausesound();
+            game.status = "playing"; 
+        }           
     }
     else if(game.status === "gameOver") {
         console.log("GAME OVER");
@@ -55,7 +61,6 @@ document.addEventListener("keydown", onKeydown);
 
 function tick() {
     window.requestAnimationFrame(tick);
-    //game.renderer.ctxMain.clearRect(0,0,game.mainCanvas.width, game.mainCanvas.height);
     game.renderer.clear();
     game.renderer.drawBackground(game.board);
     game.renderer.drawBoard(game.board, game.score);
@@ -72,6 +77,7 @@ function tick() {
 
         if(game.moveCounter <= 0) {         
             if(!game.move(0, 1)){
+                game.soundCollection.playHitsound();
                 game.release();
                 if(game.canPut(3, 0, 0, game.nextTetromino)) {
                     game.bind(3,0,game.nextTetromino);

@@ -18,6 +18,7 @@ class Game {
         this.nextTetromino = new Tetromino(this.getRandomInt(), 12, 3);
 
         this.renderer = new Renderer();
+        this.soundCollection = new SoundCollection();
 
 
     }
