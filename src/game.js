@@ -9,20 +9,36 @@ class Game {
         this.current = 0;
         this.delta = 0; 
         this.moveCounter = 0;
+        this.numbers = [];
         // Board x y on canvas
         this.board = new Board(10, 20, 3, 2);
 
         // Tetromino x y on board, next type of tetromino
-        this.bind(3,0, new Tetromino(this.getRandomInt(0,7), 3, 0));
-        this.nextTetromino = new Tetromino(this.getRandomInt(0,7), 12, 3);
+        this.bind(3,0, new Tetromino(this.getRandomInt(), 3, 0));
+        this.nextTetromino = new Tetromino(this.getRandomInt(), 12, 3);
 
         this.renderer = new Renderer();
+
+
     }
 
-    getRandomInt(min, max) {
-        min = Math.ceil(min);
-        max = Math.floor(max);
-        return Math.floor(Math.random() * (max - min) + min);
+    getRandomInt () {
+
+            if(this.numbers.length === 0){
+                this.numbers = [0, 1, 2, 3, 4, 5, 6];
+                
+                for(let x = 0; x < 14; ++x) {
+                    let min = 0;
+                    let max = 7;
+                    let i1 =  Math.floor(Math.random() * (max - min) + min);
+                    let i2 =  Math.floor(Math.random() * (max - min) + min);
+                    let firstNumber = this.numbers[i1];
+                    this.numbers[i1] = this.numbers[i2];
+                    this.numbers[i2] = firstNumber;
+                }
+
+            }
+            return this.numbers.pop();
     }
     
     getPoints(lines) {

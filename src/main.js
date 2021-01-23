@@ -22,7 +22,7 @@
                 game.release();
                 if(game.canPut(3, 0, 0, game.nextTetromino)) {
                     game.bind(3,0,game.nextTetromino);
-                    game.nextTetromino = new Tetromino(game.getRandomInt(0,7), 12, 3);
+                    game.nextTetromino = new Tetromino(game.getRandomInt(), 12, 3);
                 }
                 else
                     game.status = "gameOver";  
@@ -75,7 +75,7 @@ function tick() {
                 game.release();
                 if(game.canPut(3, 0, 0, game.nextTetromino)) {
                     game.bind(3,0,game.nextTetromino);
-                    game.nextTetromino = new Tetromino(game.getRandomInt(0,7), 12, 3);
+                    game.nextTetromino = new Tetromino(game.getRandomInt(), 12, 3);
                 }
                 else
                     
