@@ -80,10 +80,16 @@ class Renderer {
         }
 
         this.ctxMain.fillStyle = "white";
-        this.ctxMain.font = "20px Arial"
-        this.ctxMain.fillText("SCORE: " + score, (board.x + 13) * 25, board.y + 50 )
-        this.ctxMain.fillText("NEXT:", (board.x + 13) * 25, board.y + 100 )
-
+        this.ctxMain.font = "20px Arial";
+        this.ctxMain.fillText("SCORE: " + score, (board.x + 13) * 25, board.y + 50 );
+        this.ctxMain.fillText("NEXT:", (board.x + 13) * 25, board.y + 100);
+        this.ctxMain.fillStyle = "grey";
+        this.ctxMain.fillText("HOW TO PLAY:", (board.x + 12) * 25, board.y + 300);
+        this.ctxMain.fillText("Use arrows ← ↓ →", (board.x + 12) * 25, board.y + 325);
+        this.ctxMain.fillText("to move tetromino,", (board.x + 12) * 25, board.y + 350);
+        this.ctxMain.fillText("↑ to drop tetromino.", (board.x + 12) * 25, board.y + 375);
+        this.ctxMain.fillText("Press ENTER to pause", (board.x + 12) * 25, board.y + 400);
+        this.ctxMain.fillText("or start a new game.", (board.x + 12) * 25, board.y + 425);
     }
 
     drawBackground(board){
