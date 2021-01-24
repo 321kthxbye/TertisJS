@@ -31,9 +31,9 @@ body {
 
 @keyframes mymove {
 
-    0% { transform: translateY(0px); background: url("../res/logo2.png") no-repeat;}
-    50% { transform: translateY(-10px); background: url("../res/logo2.png") no-repeat;}
-    100% { transform: translateY(0px); background: url("../res/logo2.png") no-repeat;}
+    0% { transform: translateY(0px); background: url("../res/logo.png") no-repeat;}
+    50% { transform: translateY(-10px); background: url("../res/logo.png") no-repeat;}
+    100% { transform: translateY(0px); background: url("../res/logo.png") no-repeat;}
     /* 50% { transform: translateY(0px); }
     75% { transform: translateY(-5px); }
     100% { transform: translateY(0px); } */

@@ -19,7 +19,7 @@
                break;
            case "ArrowUp":
                 game.drop();
-                game.soundCollection.playHitsound();
+                game.soundCollection.play(game.soundCollection.hit);
                 game.release();
                 if(game.canPut(3, 0, 0, game.nextTetromino)) {
                     game.bind(3,0,game.nextTetromino);
@@ -30,11 +30,11 @@
                 break;
            case "Space":
                 if(game.rotate()){
-                    game.soundCollection.playRotationsound();
+                    game.soundCollection.play(game.soundCollection.sounds.rotation);
                 }
                 break;
             case "Enter":
-                game.soundCollection.playPausesound();
+                game.soundCollection.play(game.soundCollection.sounds.pause);
                 game.status = "paused";
                 break;
            default:
@@ -45,7 +45,7 @@
     else if(game.status === "paused") {
         console.log("PAUSE");
         if(e.code === "Enter") {
-            game.soundCollection.playPausesound();
+            game.soundCollection.play(game.soundCollection.sounds.pause);
             game.status = "playing"; 
         }           
     }
@@ -77,7 +77,7 @@ function tick() {
 
         if(game.moveCounter <= 0) {         
             if(!game.move(0, 1)){
-                game.soundCollection.playHitsound();
+                game.soundCollection.play(game.soundCollection.sounds.hit)
                 game.release();
                 if(game.canPut(3, 0, 0, game.nextTetromino)) {
                     game.bind(3,0,game.nextTetromino);
@@ -89,7 +89,10 @@ function tick() {
             }
             game.moveCounter = 500;
         } 
-        game.score += game.getPoints(game.board.remComplLines());
+        let remLines = game.board.remComplLines();
+        if(remLines > 0)
+            game.soundCollection.play(game.soundCollection.sounds.explosion);
+        game.score += game.getPoints(remLines);
     } 
     else if (game.status === "paused") {
         console.log("PAUSED");
