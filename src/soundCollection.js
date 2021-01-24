@@ -8,9 +8,11 @@ class SoundCollection {
         }        
     }
 
-    play(sound) {
-        sound.pause();
-        sound.currentTime = 0;
-        sound.play();
+    play(sound, mute) {
+        if(!mute){
+            sound.pause();
+            sound.currentTime = 0;
+            sound.play();
+        }
     }
 }

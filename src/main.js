@@ -19,7 +19,7 @@
                break;
            case "ArrowUp":
                 game.drop();
-                game.soundCollection.play(game.soundCollection.hit);
+                game.soundCollection.play(game.soundCollection.sounds.hit, game.mute);
                 game.release();
                 if(game.canPut(3, 0, 0, game.nextTetromino)) {
                     game.bind(3,0,game.nextTetromino);
@@ -30,12 +30,15 @@
                 break;
            case "Space":
                 if(game.rotate()){
-                    game.soundCollection.play(game.soundCollection.sounds.rotation);
+                    game.soundCollection.play(game.soundCollection.sounds.rotation, game.mute);
                 }
                 break;
             case "Enter":
-                game.soundCollection.play(game.soundCollection.sounds.pause);
+                game.soundCollection.play(game.soundCollection.sounds.pause, game.mute);
                 game.status = "paused";
+                break;
+            case "KeyM":
+                game.mute = !game.mute;
                 break;
            default:
                break;
@@ -45,7 +48,7 @@
     else if(game.status === "paused") {
         console.log("PAUSE");
         if(e.code === "Enter") {
-            game.soundCollection.play(game.soundCollection.sounds.pause);
+            game.soundCollection.play(game.soundCollection.sounds.pause, game.mute);
             game.status = "playing"; 
         }           
     }
@@ -63,7 +66,7 @@ function tick() {
     window.requestAnimationFrame(tick);
     game.renderer.clear();
     game.renderer.drawBackground(game.board);
-    game.renderer.drawBoard(game.board, game.score);
+    game.renderer.drawBoard(game.board, game.score, game.mute);
     game.ghost();
     game.renderer.drawTetrominos(game.tetromino, game.ghostTetromino, game.nextTetromino, game.board);
     game.renderer.drawDialogues(game.status, game.board);
@@ -77,7 +80,7 @@ function tick() {
 
         if(game.moveCounter <= 0) {         
             if(!game.move(0, 1)){
-                game.soundCollection.play(game.soundCollection.sounds.hit)
+                game.soundCollection.play(game.soundCollection.sounds.hit, game.mute)
                 game.release();
                 if(game.canPut(3, 0, 0, game.nextTetromino)) {
                     game.bind(3,0,game.nextTetromino);
@@ -91,7 +94,7 @@ function tick() {
         } 
         let remLines = game.board.remComplLines();
         if(remLines > 0)
-            game.soundCollection.play(game.soundCollection.sounds.explosion);
+            game.soundCollection.play(game.soundCollection.sounds.explosion, game.mute);
         game.score += game.getPoints(remLines);
     } 
     else if (game.status === "paused") {

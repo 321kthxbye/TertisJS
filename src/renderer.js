@@ -66,7 +66,7 @@ class Renderer {
         this.drawTetromino(nextTetromino, 1, board);
     }
 
-    drawBoard(board, score)
+    drawBoard(board, score, mute)
     {
         for(let row = 0; row < board.height; ++row){
             for(let col = 0; col < board.width; ++col){
@@ -90,6 +90,12 @@ class Renderer {
         this.ctxMain.fillText("↑ to drop tetromino.", (board.x + 12) * 25, board.y + 375);
         this.ctxMain.fillText("Press ENTER to pause", (board.x + 12) * 25, board.y + 400);
         this.ctxMain.fillText("or start a new game.", (board.x + 12) * 25, board.y + 425);
+        this.ctxMain.fillText("Press M to un/mute.", (board.x + 12) * 25, board.y + 475);
+
+        if(!mute)
+            this.ctxMain.drawImage(this.spritesheet, 0, 25,50,50, (board.x + 15) * 25, board.y + 500, 25, 25)
+        else
+            this.ctxMain.drawImage(this.spritesheet, 50, 25,50,50, (board.x + 15) * 25, board.y + 500, 25, 25)
     }
 
     drawBackground(board){

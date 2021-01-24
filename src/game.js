@@ -19,6 +19,7 @@ class Game {
 
         this.renderer = new Renderer();
         this.soundCollection = new SoundCollection();
+        this.mute = false;
 
     }
 
